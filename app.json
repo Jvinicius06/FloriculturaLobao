@@ -1,0 +1,12 @@
+{
+  "name": "FloriculturaLobao",
+  "displayName": "FloriculturaLobao",
+  "expo": {
+    "name": "FloriculturaLobao",
+    "slug": "FloriculturaLobao",
+    "version": "1.0.0",
+    "assetBundlePatterns": [
+      "**/*"
+    ]
+  }
+}
