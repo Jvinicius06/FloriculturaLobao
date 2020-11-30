@@ -39,7 +39,7 @@ export default class Home extends Component {
     const { page } = this.state;
     return (
       <View style={styles.container}>
-        <HeaderHome setPage={this.setPage} />
+        <HeaderHome setPage={this.setPage} {...this.props} />
         {
           page === 'car' ?
           <Car setPage={this.setPage} /> :

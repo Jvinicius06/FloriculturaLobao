@@ -26,7 +26,7 @@ const Card = (props) => {
         <Image source={{uri: getUrlImage(data.image_path)}} style={styles.tinyLogo} />
       </Eff>
       <Text>{data.name}</Text>
-      <Text>{`R$: ${data.price.toFixed(2)}`}</Text>
+      <Text>{data.quant > 0 ? `R$: ${data.price.toFixed(2)}` : 'Item não mais disponivel!'}</Text>
     </Pressable>
   );
 }
@@ -59,7 +59,15 @@ export default class Itens extends Component {
     const loading = data.length == 0;
     const re = new RegExp(searchText, 'giu');
     const dataFilter = searchText.length === 0
-    ? data.sort((a, b) => a.quant <= 0 ? 1 : -1)
+    ? data.sort((a, b) => {
+      if (b.name > a.name) {
+        return -1;
+      }
+      if (b.name < a.name) {
+        return 1;
+      }
+      return 0;
+    })
     : data.filter((iten) => re.test(iten.name));
     return (
       <View style={styles.container}>

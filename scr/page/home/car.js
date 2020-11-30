@@ -73,9 +73,9 @@ class CartIten extends Component {
           <Text style={styles.carItenTitle}>{`R$: ${this.getPrice()}`}</Text>
         </View>
         <View style={styles.carItenQuant}>
-          <MyButton title="-" onPress={() => myCar.removeIten(data.iten)} style={styles.carItenQuantButton} />
+          <MyButton title="-" onPress={() => myCar.removeIten(data.iten)} styleView={styles.carItenQuantButton} style={styles.carItenQuantButton2}/>
           <Text style={styles.carItenQuantTitle}>{data.quant}</Text>
-          <MyButton title="+" onPress={() => myCar.addIten(data.iten)} style={styles.carItenQuantButton} />
+          <MyButton title="+" onPress={() => myCar.addIten(data.iten)} styleView={styles.carItenQuantButton} style={styles.carItenQuantButton2} />
         </View>
       </View>
     );
@@ -107,6 +107,7 @@ export default class Car extends Component {
   componentWillUnmount() {
     BackHandler.removeEventListener("hardwareBackPress", this.pushBack);
     myCar.off('update', this.update);
+    myCar.clear();
   }
 
   pushBack() {
@@ -148,7 +149,15 @@ export default class Car extends Component {
             </View>
           </ScrollView>
           <View style={styles.total}>
-            <Text>Total</Text>
+            {
+              dd.length > 0 ?
+              (
+                <View style={styles.totalContent}>
+                  <Text>Total R$:{`${myCar.getTotal()}`}</Text>
+                  <MyButton title="Finalizar compra" onPress={this.pushBack} style={{backgroundColor: theme.color.primary, marginTop: 10}} />
+                </View>
+              ) : null
+            }
           </View>
         </View>
       </View>
@@ -167,10 +176,18 @@ const styles = StyleSheet.create({
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'space-between',
+    width: '100%',
     flex: 1,
   },
   total: {
-    height: 100,
+    height: 115,
+    paddingTop: 15,
+    alignItems: 'center',
+    borderTopColor: '#efefef',
+    borderTopWidth: 1,
+  },
+  totalContent: {
+    width: '90%',
   },
   notIten: {
     width: 200,
@@ -220,10 +237,15 @@ const styles = StyleSheet.create({
     width: 27,
   },
   carItenQuantButton: {
-    margin: 0,
-    padding: 6,
     width: 40,
     height: 40,
+    margin: 0,
+  },
+  carItenQuantButton2: {
+    marginTop: 0,
+    width: '100%',
+    height: '100%',
+    padding: 6,
     backgroundColor: theme.color.primary,
   },
   headerTT: {

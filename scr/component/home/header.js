@@ -4,6 +4,8 @@ import {
   View,
   Image,
   StyleSheet,
+  Pressable,
+  AsyncStorage,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/Feather';
 
@@ -17,7 +19,12 @@ export default class HeaderHome extends Component {
     const { setPage } = this.props;
     return (
       <View style={styles.container}>
-        <Icon style={styles.icon} name="menu" size={40} color="#FFF" />
+        <Pressable onPress={() => {
+          AsyncStorage.removeItem('token');
+          this.props.history.push("/")
+        }}>
+          <Icon style={styles.icon} name="menu" size={40} color="#FFF" />
+        </Pressable>
         <Image
           style={styles.tinyLogo}
           source={require('../../img/pp.png')}

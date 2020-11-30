@@ -1,6 +1,8 @@
 import Emitter from 'tiny-emitter';
 import { getIten } from './itens';
 
+// Locale meuLocal = new Locale( "pt", "BR" );
+
 class MyCar extends Emitter {
   constructor() {
     super();
@@ -32,24 +34,40 @@ class MyCar extends Emitter {
 
   }
 
-  getPrice() {
-    return 1000;
+  getTotal() {
+    function currencyFormat(num) {
+       return '' + num.toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')
+    }
+    let total = 0;
+    this.itens.forEach((item, i) => {
+      const { price, quant } = item;
+      total += (price*quant);
+    });
+    return currencyFormat(total);
+  }
+
+  clear() {
+    this.itens = this.itens.filter((iten) => {
+      return iten.quant > 0;
+    });
+    this.emit('update');
   }
 
   addIten(uuid) {
     return new Promise((resolve, reject) => {
       try {
         this.getDataIten(uuid)
-        // .then((e) => e.json())
         .then((dd) => {
           const maxQuant = dd.quant;
           const ii = this.find(uuid);
           if (ii > -1) {
+            this.itens[ii].price = dd.price;
             this.itens[ii].quant = this.itens[ii].quant >= maxQuant ? maxQuant : this.itens[ii].quant + 1;
             resolve();
           } else {
             if (maxQuant > 0) {
               this.itens.push({
+                price: dd.price,
                 iten: uuid,
                 quant: 1,
               });

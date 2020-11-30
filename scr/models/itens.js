@@ -26,7 +26,6 @@ const _getIten = (uuid) => {
 }
 
 const getIten = async (uuid) => {
-  console.log(`uuid - `, uuid);
   if (baseData[uuid]) {
     const dd = baseData[uuid].updateAt;
     await _getIten(uuid);

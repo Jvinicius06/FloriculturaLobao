@@ -32,6 +32,7 @@ class Input extends Component {
           style={styles.input}
           placeholder={placeholder}
           onChangeText={this.onChange}
+          {...this.props}
           />
       </View>
     )

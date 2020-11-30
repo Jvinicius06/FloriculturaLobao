@@ -8,7 +8,6 @@ import {
 const Title = (props) => {
   const { style } = props;
   const { container, textFF, textLL } = style || {};
-  console.log('container - ', container);
   return (
     <View style={[styles.container, container]}>
       <Text style={[styles.textFF, textFF]}>Floricultura</Text>
